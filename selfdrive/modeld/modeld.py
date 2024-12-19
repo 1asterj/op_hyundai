@@ -23,6 +23,7 @@ from openpilot.selfdrive.modeld.parse_model_outputs import Parser
 from openpilot.selfdrive.modeld.fill_model_msg import fill_model_msg, fill_pose_msg, PublishState
 from openpilot.selfdrive.modeld.constants import ModelConstants
 from openpilot.selfdrive.modeld.models.commonmodel_pyx import DrivingModelFrame, CLContext
+from openpilot.selfdrive.controls.ntune import ntune_common_get
 
 PROCESS_NAME = "selfdrive.modeld.modeld"
 SEND_RAW_PRED = os.getenv('SEND_RAW_PRED')
@@ -180,7 +181,7 @@ def main(demo=False):
   cloudlog.info("modeld got CarParams: %s", CP.carName)
 
   # TODO this needs more thought, use .2s extra for now to estimate other delays
-  steer_delay = CP.steerActuatorDelay + .2
+  steer_delay = ntune_common_get('steerActuatorDelay') + .2
 
   DH = DesireHelper()
 
